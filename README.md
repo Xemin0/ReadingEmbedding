@@ -23,7 +23,7 @@ matplotlib
 seaborn
 ```
 ## Datasets
-Pre-processed from [ZuCo 1.0](https://www.nature.com/articles/sdata2018291), [Google Drive](https://drive.google.com/drive/folders/1c8qsZtEcA5zUQOwcpqS90LBHzIBTOyns?usp=sharing) Download to keep them in `./Datasets/`
+Pre-processed from [ZuCo 1.0](https://www.nature.com/articles/sdata2018291): [Google Drive](https://drive.google.com/drive/folders/1c8qsZtEcA5zUQOwcpqS90LBHzIBTOyns?usp=sharing) Download and keep them in `./Datasets/`
 
 ## Usage (Will be updated with easier hyper-parameter settings)
 - `trainREmodel.py` to train the model on the datasets
