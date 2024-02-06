@@ -1,6 +1,6 @@
 # ReadingEmebdding - Implementation
 ### From Word Embedding to Reading Embedding Using Large Language Model, EEG and Eye-tracking
-[Paper](https://arxiv.org/pdf/2401.15681.pdf)
+Paper: https://arxiv.org/pdf/2401.15681.pdf
 
 ![The Overall Workflow](./images/scheme.png?raw=true "Title")
 
