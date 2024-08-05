@@ -76,6 +76,8 @@ def masked_mse_loss(y_pred, y_true, sen_lengths):
 def masked_f1_loss(y_pred, y_true, sen_lengths):
     '''
     Soft F1 Loss based on Bray-Curtis Distance
+
+    ### Drawback: Non Convexity
     '''
     device = y_true.device
     max_len = y_true.shape[-1]
@@ -85,10 +87,10 @@ def masked_f1_loss(y_pred, y_true, sen_lengths):
     masked_labels = y_true.masked_select(mask).float()
 
     # Calculate the TP, TN, FP, FN
-    tp = torch.sum(y_true * y_pred, dim = 0)
-    tn = torch.sum((1 - y_true) * (1 - y_pred), dim = 0)
-    fp = torch.sum((1 - y_true) * y_pred, dim = 0)
-    fn = torch.sum(y_true * (1 - y_pred), dim = 0)
+    tp = torch.sum(masked_labels * masked_preds, dim = 0)
+    tn = torch.sum((1 - masked_labels) * (1 - masked_preds), dim = 0)
+    fp = torch.sum((1 - masked_labels) * masked_preds, dim = 0)
+    fn = torch.sum(masked_labels * (1 - masked_preds), dim = 0)
 
     # Precesion and Recall
     p = tp / (tp + fp + 1e-7)
