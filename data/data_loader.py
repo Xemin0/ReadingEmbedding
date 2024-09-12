@@ -14,17 +14,19 @@ import sys
 import json
 import scipy.io as sio
 import numpy as np
+import os
 
 import random
 import math
 
 
-def load_data(downsample = False, subIdx = 0, rootpath = './Datasets/'):
+def load_data(downsample = False, subIdx = 0, datapath = './Datasets/'):
     # List of Subject Names
     subject_name_list = ['ZAB', 'ZDM', 'ZDN', 'ZJM', 'ZJN', 'ZJS', 'ZKH', 'ZKW', 'ZMG']
     
     # Word Embeddings with padding
-    em_data = sio.loadmat(rootpath + 'wordEmbeddingAll.mat')['wordEmbeddingAll'].squeeze() # (358, )
+    #em_data = sio.loadmat(rootpath + 'wordEmbeddingAll.mat')['wordEmbeddingAll'].squeeze() # (358, )
+    em_data = sio.loadmat(os.path.join(datapath, 'wordEmbeddingAll.mat'))['wordEmbeddingAll'].squeeze() # (358, )
     
     sen_len_em = [m.shape[0] for m in em_data]
     max_num_words_em = max(sen_len_em)
@@ -38,7 +40,7 @@ def load_data(downsample = False, subIdx = 0, rootpath = './Datasets/'):
 
     ########################################
     # EEG Feature Data with padding
-    EEG_path = rootpath + 'EEG_data/EEGEmbeddingAll_' + subject_name_list[subIdx] + '.mat'
+    EEG_path = os.path.join(datapath, 'EEG_data', 'EEGEmbeddingAll_' + subject_name_list[subIdx] + '.mat')
     eeg_data = sio.loadmat(EEG_path)['EEGEmbeddingAll'].squeeze() # (358,)
 
     sen_len_eeg = [len(m) for m in eeg_data]
@@ -55,7 +57,7 @@ def load_data(downsample = False, subIdx = 0, rootpath = './Datasets/'):
                 eeg_features[i, j, :] = torch.from_numpy(word[0].squeeze())
     ########################################    
     # Eye Gaze Data with padding
-    EGD_path = rootpath + 'subject_data/eyeGazeData_' + subject_name_list[subIdx] + '.json'
+    EGD_path = os.path.join(datapath, 'subject_data', 'eyeGazeData_' + subject_name_list[subIdx] + '.json')
     with open(EGD_path) as file:
         eg_data = json.load(file)
 
@@ -81,7 +83,7 @@ def load_data(downsample = False, subIdx = 0, rootpath = './Datasets/'):
           
     ########################################   
     # Labels with padding
-    with open(rootpath + 'logicVectors.json') as file:
+    with open(os.path.join(datapath, 'logicVectors.json')) as file:
         lb_data = json.load(file)
 
     sen_len_lb = [len(d) for d in lb_data]

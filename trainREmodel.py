@@ -21,7 +21,7 @@ Load Real Data
 idx = 0 #### 0 - 8 for 9 different subjects
 feat_choice = [0, 1, 0]
 epochs = 480
-opt_type = 'Adam'
+opt_type = 'SGD' # Adam
 
 downsampled_data = load_data(downsample = True, subIdx = idx) #### Down Sample or not 
 original_data = load_data(downsample = False, subIdx = idx)
@@ -40,7 +40,13 @@ embeddings, eeg_features, gaze_features, labels, sen_len = original_data
 '''
 # Device setup
 '''
+seed = 42
+torch.manual_seed(seed)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# seed gpus if available
+if torch.cuda.isavalable():
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
 print(device)
 
 # Initialize Model
